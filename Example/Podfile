@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '9.0'
+
+target 'LSJHProgressView_Example' do
+  pod 'LSJHProgressView', :path => '../'
+
+  target 'LSJHProgressView_Tests' do
+    inherit! :search_paths
+
+    pod 'FBSnapshotTestCase'
+  end
+end
