@@ -1,15 +1,14 @@
 //
-//  WYAProgress.m
-//  WYAKit
+//  LLProgress.m
 //
 //  Created by 李世航 on 2018/12/4.
 //
 
-#import "WYAProgressView.h"
+#import "LLProgressView.h"
 #import <LSJHCategory/LLCategory.h>
-#define WYACircleDegreeToRadian(d) ((d)*M_PI) / 180.0
+#define LLCircleDegreeToRadian(d) ((d)*M_PI) / 180.0
 
-@interface WYAProgressView () <CAAnimationDelegate>
+@interface LLProgressView () <CAAnimationDelegate>
 @property (nonatomic, strong) CAShapeLayer * backLayer;
 @property (nonatomic, strong) CAShapeLayer * progressLayer;
 
@@ -24,22 +23,22 @@ CGFloat startAngle;                                /**<起点角度。角度从�
 
 @property (nonatomic, assign) BOOL increaseFromLast; /**<是否从上次数值开始动画，默认为NO*/
 @property (nonatomic, strong) UIImageView * bgImageView;
-@property (nonatomic, assign) WYAProgressViewStyle style;
+@property (nonatomic, assign) LLProgressViewStyle style;
 @end
 
-@implementation WYAProgressView
+@implementation LLProgressView
 
 - (instancetype)init
 {
-    return [self initWithFrame:CGRectZero  progressViewStyle:WYAProgressViewStyleStraight];
+    return [self initWithFrame:CGRectZero  progressViewStyle:LLProgressViewStyleStraight];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
-    return [self initWithFrame:frame progressViewStyle:WYAProgressViewStyleStraight];
+    return [self initWithFrame:frame progressViewStyle:LLProgressViewStyleStraight];
 }
 
-- (instancetype)initWithFrame:(CGRect)frame progressViewStyle:(WYAProgressViewStyle)style
+- (instancetype)initWithFrame:(CGRect)frame progressViewStyle:(LLProgressViewStyle)style
 {
     if (self = [super initWithFrame:frame]) {
         self.style = style;
@@ -51,14 +50,14 @@ CGFloat startAngle;                                /**<起点角度。角度从�
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    if (self.style == WYAProgressViewStyleStraight) {
+    if (self.style == LLProgressViewStyleStraight) {
         CGFloat bgImageView_X      = 0;
         CGFloat bgImageView_Y      = 0;
         CGFloat bgImageView_Width  = self.cmam_width * self.progress;
         CGFloat bgImageView_Height = self.cmam_height;
         self.bgImageView.frame =
         CGRectMake(bgImageView_X, bgImageView_Y, bgImageView_Width, bgImageView_Height);
-    } else if (self.style == WYAProgressViewStyleCircle) {
+    } else if (self.style == LLProgressViewStyleCircle) {
         CGFloat bgImageView_X      = self.borderWidth;
         CGFloat bgImageView_Y      = self.borderWidth;
         CGFloat bgImageView_Width  = self.cmam_width - self.borderWidth * 2;
@@ -75,12 +74,12 @@ CGFloat startAngle;                                /**<起点角度。角度从�
 {
     self.backgroundColor = [UIColor whiteColor];
     _trackTintColor      = [UIColor lightGrayColor];
-    _progressTintColor   = [UIColor wya_hex:@"#108DE7"];
-    if (self.style == WYAProgressViewStyleStraight) {
-    } else if (self.style == WYAProgressViewStyleCircle) {
+    _progressTintColor   = [UIColor ll_hex:@"#108DE7"];
+    if (self.style == LLProgressViewStyleStraight) {
+    } else if (self.style == LLProgressViewStyleCircle) {
         _borderWidth = 5;                            //线宽默认为5
-        _startAngle  = WYACircleDegreeToRadian(270); //圆起点位置
-        _reduceAngle = WYACircleDegreeToRadian(0);   //整个圆缺少的角度
+        _startAngle  = LLCircleDegreeToRadian(270); //圆起点位置
+        _reduceAngle = LLCircleDegreeToRadian(0);   //整个圆缺少的角度
         _radius      = self.cmam_width / 2.0 - self.borderWidth / 2.0;
     }
 
@@ -92,7 +91,7 @@ CGFloat startAngle;                                /**<起点角度。角度从�
 }
 
 #pragma mark - Public Method -
-- (void)wya_setProgress:(CGFloat)progress Animation:(BOOL)animation
+- (void)ll_setProgress:(CGFloat)progress Animation:(BOOL)animation
 {
     if (animation) {
         [self startAnimation:progress];
@@ -140,9 +139,9 @@ CGFloat startAngle;                                /**<起点角度。角度从�
 {
     if (!_bgImageView) {
         _bgImageView = [[UIImageView alloc] init];
-        if (self.style == WYAProgressViewStyleStraight) {
+        if (self.style == LLProgressViewStyleStraight) {
             _bgImageView.layer.masksToBounds = NO;
-        } else if (self.style == WYAProgressViewStyleCircle) {
+        } else if (self.style == LLProgressViewStyleCircle) {
             _bgImageView.layer.masksToBounds = YES;
         }
     }
@@ -152,8 +151,8 @@ CGFloat startAngle;                                /**<起点角度。角度从�
 #pragma mark - Setter -
 - (void)setStartAngle:(CGFloat)startAngle
 {
-    if (_startAngle != WYACircleDegreeToRadian(startAngle)) {
-        _startAngle = WYACircleDegreeToRadian(startAngle);
+    if (_startAngle != LLCircleDegreeToRadian(startAngle)) {
+        _startAngle = LLCircleDegreeToRadian(startAngle);
 
         //如果已经创建了相关layer则重新创建
         if (_backLayer) {
@@ -171,11 +170,11 @@ CGFloat startAngle;                                /**<起点角度。角度从�
 
 - (void)setReduceAngle:(CGFloat)reduceAngle
 {
-    if (_reduceAngle != WYACircleDegreeToRadian(reduceAngle)) {
+    if (_reduceAngle != LLCircleDegreeToRadian(reduceAngle)) {
         if (reduceAngle >= 360) {
             return;
         }
-        _reduceAngle = WYACircleDegreeToRadian(reduceAngle);
+        _reduceAngle = LLCircleDegreeToRadian(reduceAngle);
 
         if (_backLayer) {
             UIBezierPath * backCirclePath = [self getNewBezierPath];
@@ -201,9 +200,9 @@ CGFloat startAngle;                                /**<起点角度。角度从�
 {
     if (_trackTintColor != trackTintColor) {
         _trackTintColor = trackTintColor;
-        if (self.style == WYAProgressViewStyleStraight) {
+        if (self.style == LLProgressViewStyleStraight) {
             self.backgroundColor = _trackTintColor;
-        } else if (self.style == WYAProgressViewStyleCircle) {
+        } else if (self.style == LLProgressViewStyleCircle) {
             if (_backLayer) {
                 _backLayer.strokeColor = _trackTintColor.CGColor;
             }
@@ -215,9 +214,9 @@ CGFloat startAngle;                                /**<起点角度。角度从�
 {
     if (_progressTintColor != progressTintColor) {
         _progressTintColor = progressTintColor;
-        if (self.style == WYAProgressViewStyleStraight) {
+        if (self.style == LLProgressViewStyleStraight) {
             self.bgImageView.backgroundColor = _progressTintColor;
-        } else if (self.style == WYAProgressViewStyleCircle) {
+        } else if (self.style == LLProgressViewStyleCircle) {
             if (_progressLayer) {
                 _progressLayer.strokeColor = _progressTintColor.CGColor;
             }
@@ -260,7 +259,7 @@ CGFloat startAngle;                                /**<起点角度。角度从�
         _progress = 1;
     }
 
-    if (self.style == WYAProgressViewStyleCircle) {
+    if (self.style == LLProgressViewStyleCircle) {
         //准备好显示
         if (!self.backLayer.superlayer) {
             [self.layer addSublayer:self.backLayer];
@@ -270,7 +269,7 @@ CGFloat startAngle;                                /**<起点角度。角度从�
             [self.layer addSublayer:self.progressLayer];
         }
         self.progressLayer.strokeEnd = _progress;
-    } else if (self.style == WYAProgressViewStyleStraight) {
+    } else if (self.style == LLProgressViewStyleStraight) {
         [self setNeedsLayout];
         [self layoutIfNeeded];
     }
@@ -295,9 +294,9 @@ CGFloat startAngle;                                /**<起点角度。角度从�
 //刷新最新路径
 - (UIBezierPath *)getNewBezierPath
 {
-    if (self.style == WYAProgressViewStyleStraight) {
+    if (self.style == LLProgressViewStyleStraight) {
         return [UIBezierPath bezierPath];
-    } else if (self.style == WYAProgressViewStyleCircle) {
+    } else if (self.style == LLProgressViewStyleCircle) {
         return [UIBezierPath
         bezierPathWithArcCenter:CGPointMake(self.cmam_width / 2.0, self.cmam_width / 2.0)
                          radius:_radius

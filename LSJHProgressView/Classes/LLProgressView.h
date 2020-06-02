@@ -1,6 +1,5 @@
 //
-//  WYAProgress.h
-//  WYAKit
+//  LLProgress.h
 //
 //  Created by 李世航 on 2018/12/4.
 //
@@ -9,12 +8,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSUInteger, WYAProgressViewStyle) {
-    WYAProgressViewStyleStraight,
-    WYAProgressViewStyleCircle,
+typedef NS_ENUM(NSUInteger, LLProgressViewStyle) {
+    LLProgressViewStyleStraight,
+    LLProgressViewStyleCircle,
 };
 
-@interface WYAProgressView : UIView
+@interface LLProgressView : UIView
 /// 背景图片
 @property (nonatomic, strong) UIImage * backgroundImage UI_APPEARANCE_SELECTOR;
 /// 背景线的颜色
@@ -26,7 +25,7 @@ typedef NS_ENUM(NSUInteger, WYAProgressViewStyle) {
 /// 进度（0~1）
 @property (nonatomic, assign) CGFloat progress;
 
-- (instancetype)initWithFrame:(CGRect)frame progressViewStyle:(WYAProgressViewStyle)style;
+- (instancetype)initWithFrame:(CGRect)frame progressViewStyle:(LLProgressViewStyle)style;
 
 /**
  设置进度
@@ -34,7 +33,7 @@ typedef NS_ENUM(NSUInteger, WYAProgressViewStyle) {
  @param progress 进度
  @param animation 是否动画
  */
-- (void)wya_setProgress:(CGFloat)progress Animation:(BOOL)animation;
+- (void)ll_setProgress:(CGFloat)progress Animation:(BOOL)animation;
 
 @end
 

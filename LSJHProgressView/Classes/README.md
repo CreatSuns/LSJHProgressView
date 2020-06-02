@@ -1,4 +1,4 @@
-# WYAProgressView
+# LLProgressView
 
 ## 功能
 
@@ -22,18 +22,15 @@ progress|进度（0~1）|CGFloat|0
  @param progress 进度
  @param animation 是否动画
  */
--(void)wya_setProgress:(CGFloat)progress Animation:(BOOL)animation;
+-(void)ll_setProgress:(CGFloat)progress Animation:(BOOL)animation;
 ```
 
 ## 基础用法
 - 导入头文件
 
-```objective-c
-#import <WYAKit/WYAProgressView.h>
-```
 
 ```objective-c
-WYAProgressView * progressV = [[WYAProgressView alloc] initWithFrame:rect];
+LLProgressView * progressV = [[LLProgressView alloc] initWithFrame:rect];
 progressV.borderWidth       = 2;
 [self.view addSubview:progressV];
 ```
